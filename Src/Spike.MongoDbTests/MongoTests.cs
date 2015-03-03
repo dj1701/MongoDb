@@ -5,6 +5,7 @@ using Spike.MongoDb;
 
 namespace Spike.MongoDbTests
 {
+    [TestFixture]
     public class MongoTests
     {
         private MongoDbAccess _componentUnderTest;
@@ -46,7 +47,7 @@ namespace Spike.MongoDbTests
             }
 
             [Test]
-            public void Should_remove_collection_after_save()
+            public void Should_find_record_by_Id()
             {
                 const string expectedResult = "DJ";
 
@@ -62,9 +63,6 @@ namespace Spike.MongoDbTests
 
                 var bsonDocument = _componentUnderTest.Read(2);
                 Assert.That(bsonDocument["Name"].AsString, Is.EqualTo(expectedResult));
-
-                _componentUnderTest.DeleteAll();
-                Assert.Throws<MongoDbAccessException>(() => _componentUnderTest.Read(2));
             }
 
             [Test]
@@ -113,7 +111,7 @@ namespace Spike.MongoDbTests
             [TestCase("street", "123 Main St.")]
             [TestCase("County", "Cambridgeshire")]
             [TestCase("Post Code", "PE1 3DS")]
-            public void Should_retrieve_address_by_field_name(string fieldName, string expectedValue)
+            public void Should_retrieve_address_value_by_field_name(string fieldName, string expectedValue)
             {
                 _componentUnderTest.Add(new Foo {Properties = _nested});
 

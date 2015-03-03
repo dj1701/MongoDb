@@ -131,6 +131,33 @@ namespace Spike.MongoDbTests
                 var ex = Assert.Throws<MongoDbAccessException>(() => _componentUnderTest.ReadByFieldName(incorrectFieldName));
                 Assert.That(ex.Message, Is.EqualTo(expectedExpectionMessage));
             }
+
+            [Test]
+            public void Should_return_a_count_of_two_records()
+            {
+                _componentUnderTest.Add(new Foo { Properties = _nested });
+                _componentUnderTest.Add(new Foo { Properties = _nested });
+
+                var result = _componentUnderTest.Count();
+
+                const int expectedCount = 2;
+                Assert.That(result, Is.EqualTo(expectedCount));
+            }
+
+            [Test]
+            public void Should_remove_all_records_by_calling_DeleteAll()
+            {
+                _componentUnderTest.Add(new Foo { Properties = _nested });
+                _componentUnderTest.Add(new Foo { Properties = _nested });
+                _componentUnderTest.Add(new Foo { Properties = _nested });
+                
+                _componentUnderTest.DeleteAll();
+
+                var result = _componentUnderTest.Count();
+
+                const int expectedCount = 0;
+                Assert.That(result, Is.EqualTo(expectedCount));
+            }
         }
     }
 }

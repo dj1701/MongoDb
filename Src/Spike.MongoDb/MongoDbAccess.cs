@@ -74,7 +74,13 @@ namespace Spike.MongoDb
             _books.Drop();
         }
 
+        public long Count()
+        {
+            return _books.Count();
+        }
+
         bool _disposed = false;
+
         public void Dispose()
         {
             Dispose(true);
@@ -82,6 +88,7 @@ namespace Spike.MongoDb
         }
 
         // Protected implementation of Dispose pattern. 
+
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
